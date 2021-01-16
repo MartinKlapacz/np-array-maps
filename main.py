@@ -45,42 +45,24 @@ def np_fromiter(numbers):
 
 
 
+mappings = [for_loop, built_in_map, np_vectorize, np_fromiter]
+labels = ['for_loop', 'built_in_map', 'np_vectorize', 'np_fromiter']
+
 numbers = np.random.uniform(size=(100000, 1))
 
 if __name__ == "__main__":
-    maximum = 20_00
+    maximum = 5_000
     stepsize = 10
-    t1_list = []
-    t2_list = []
-    t3_list = []
-    t4_list = []
-    t5_list = []
+    t_lists = [[] for mapping in mappings]
     sizes = range(stepsize, maximum, stepsize)
     for size in sizes:
         numbers = np.random.uniform(size=(size, 1))
-
-        _, t1 = for_loop(numbers)
-        t1_list.append(t1)
-
-        _, t2 = built_in_map(numbers)
-        t2_list.append(t2)
-
-        _, t3 = np_vectorize(numbers)
-        t3_list.append(t3)
-
-        _, t4 = np_fromiter(numbers)
-        t4_list.append(t4)
-
-        # _, t5 = concurrent_futures(numbers)
-        # t5_list.append(t5)
+        for i, mapping in enumerate(mappings):
+            _, t = mapping(numbers)
+            t_lists[i].append(t)
 
     sizes = list(sizes)
-    plt.plot(sizes, t1_list, label='standard for loop')
-    plt.plot(sizes, t2_list, label='built in map')
-    plt.plot(sizes, t3_list, label='np.vectorize')
-    plt.plot(sizes, t4_list, label='np.fromiter')
-    
-    # plt.yscale('log')
-    # plt.xscale('log')
+    for i, t_list in enumerate(t_lists):
+        plt.plot(sizes, t_list, label=labels[i])
     plt.legend()
     plt.show()
