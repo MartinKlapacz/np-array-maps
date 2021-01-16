@@ -36,12 +36,12 @@ def np_fromiter(numbers):
     iter = [func(number) for number in numbers]
     return np.fromiter(iter, float)
 
-@timer
-def concurrent_futures(numbers):
-    with concurrent.futures.ProcessPoolExecutor(2) as executor: 
-        res_iter = executor.map(func, numbers)
-        print('lol')
-        return list(res_iter)
+# @timer
+# def concurrent_futures(numbers):
+#     with concurrent.futures.ProcessPoolExecutor(2) as executor: 
+#         res_iter = executor.map(func, numbers)
+#         print('lol')
+#         return list(res_iter)
 
 
 
@@ -54,6 +54,7 @@ if __name__ == "__main__":
     t2_list = []
     t3_list = []
     t4_list = []
+    t5_list = []
     sizes = range(stepsize, maximum, stepsize)
     for size in sizes:
         numbers = np.random.uniform(size=(size, 1))
@@ -70,8 +71,8 @@ if __name__ == "__main__":
         _, t4 = np_fromiter(numbers)
         t4_list.append(t4)
 
-        _, t5 = concurrent_futures(numbers)
-        t5_list.append(t5)
+        # _, t5 = concurrent_futures(numbers)
+        # t5_list.append(t5)
 
     sizes = list(sizes)
     plt.plot(sizes, t1_list, label='standard for loop')
