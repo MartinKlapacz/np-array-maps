@@ -5,7 +5,7 @@ import concurrent.futures
 
 
 def func(x: int):
-    return x**2
+    return x*x
 
 def timer(func):
     def wrapper(*args):
@@ -65,4 +65,6 @@ if __name__ == "__main__":
     for i, t_list in enumerate(t_lists):
         plt.plot(sizes, t_list, label=labels[i])
     plt.legend()
+    plt.xlabel("array lengths")
+    plt.ylabel("seconds")
     plt.show()
